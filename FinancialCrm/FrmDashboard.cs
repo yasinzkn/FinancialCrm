@@ -18,7 +18,7 @@ namespace FinancialCrm
         {
             InitializeComponent();
         }
-        
+
         FinancialCrmDbEntities db = new FinancialCrmDbEntities();
 
         int count = 0;
@@ -28,7 +28,7 @@ namespace FinancialCrm
             var totalBalance = db.Banks.Sum(x => x.BankBalance);
             lblTotalBalance.Text = totalBalance.ToString() + " ₺";
 
-            var lastBankProcessAmount = db.BankProcesses.OrderByDescending(x => x.BankProcessId).Take(1).Select(y => y.Amount).FirstOrDefault();
+            var lastBankProcessAmount = db.BankProcesses.OrderByDescending(x => x.Description == "Gelen Havale").Take(1).Select(y => y.Amount).FirstOrDefault();
             lblLastBankProcessAmount.Text = lastBankProcessAmount.ToString() + " ₺";
 
             //Chart1 Kodları
@@ -45,47 +45,91 @@ namespace FinancialCrm
             }
 
             //Chart2 Kodları
-            var billData = db.Bills.Select(x => new
+
+            var billData = db.Bills.GroupBy(x => x.BillTitle).Select(y => new
             {
-                x.BillTitle,
-                x.BillAmount
+                BillTitle = y.Key,
+                TotalAmount = y.Sum(x => x.BillAmount)
             }).ToList();
             chart2.Series.Clear();
             var series2 = chart2.Series.Add("Faturalar");
             series2.ChartType = SeriesChartType.Pie;
-            foreach(var item in billData)
+            foreach (var item in billData)
             {
-                series2.Points.AddXY(item.BillTitle, item.BillAmount);
+                series2.Points.AddXY(item.BillTitle, item.TotalAmount);
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             count++;
-            if(count % 4 == 1)
-            {
-                var electricityBill = db.Bills.Where(x => x.BillTitle == "Elektrik Faturası").Select(y => y.BillAmount).FirstOrDefault();
-                lblBillTitle.Text = "Elektrik Faturası";
-                lblBillAmount.Text = electricityBill.ToString() + " ₺";
-            }
-            if (count % 4 == 2)
-            {
-                var naturalGasBill = db.Bills.Where(x => x.BillTitle == "Doğalgaz Faturası").Select(y => y.BillAmount).FirstOrDefault();
-                lblBillTitle.Text = "Doğalgaz Faturası";
-                lblBillAmount.Text = naturalGasBill.ToString() + " ₺";
-            }
-            if (count % 4 == 3)
-            {
-                var waterBill = db.Bills.Where(x => x.BillTitle == "Su Faturası").Select(y => y.BillAmount).FirstOrDefault();
-                lblBillTitle.Text = "Su Faturası";
-                lblBillAmount.Text = waterBill.ToString() + " ₺";
-            }
-            if (count % 4 == 0)
-            {
-                var internetBill = db.Bills.Where(x => x.BillTitle == "İnternet Faturası").Select(y => y.BillAmount).FirstOrDefault();
-                lblBillTitle.Text = "İnternet Faturası";
-                lblBillAmount.Text = internetBill.ToString() + " ₺";
-            }
+
+            var bills = db.Bills
+                .Select(b => new { b.BillTitle, b.BillAmount })
+                .ToList();
+
+            int index = (count - 1) % bills.Count;
+
+            var currentBill = bills[index];
+
+            lblBillTitle.Text = currentBill.BillTitle;
+            lblBillAmount.Text = currentBill.BillAmount.ToString() + " ₺";
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            FrmLogin form = new FrmLogin();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnSettingsForm_Click(object sender, EventArgs e)
+        {
+            FrmSettings form = new FrmSettings();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnBankProcessForm_Click(object sender, EventArgs e)
+        {
+            FrmBankProcess form = new FrmBankProcess();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnExpensesForm_Click(object sender, EventArgs e)
+        {
+            FrmSpendings form = new FrmSpendings();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnCategoriesForm_Click(object sender, EventArgs e)
+        {
+            FrmCategories form = new FrmCategories();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnBanksForm_Click(object sender, EventArgs e)
+        {
+            FrmBanks form = new FrmBanks();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnBillsForm_Click(object sender, EventArgs e)
+        {
+            FrmBills form = new FrmBills();
+            form.Show();
+            this.Hide();
+        }
+
+        private void btnDashboardForm_Click(object sender, EventArgs e)
+        {
+            FrmDashboard form = new FrmDashboard();
+            form.Show();
+            this.Hide();
         }
     }
 }
