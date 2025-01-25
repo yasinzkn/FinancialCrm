@@ -87,7 +87,7 @@ Bu panelde kullanıcı verilerine genel olarak göz atabilmektedir. Kullanıcıl
 ---
 
 ### Ayarlar Paneli :camera:
-Kullanıcının telefon, e-posta ve şifre bilgileri üzerinde değişiklik yapabildiği paneldir.
+Kullanıcının telefon, e-posta, kullanıcı adı ve şifre bilgileri üzerinde değişiklik yapabildiği paneldir.
 
 <div align = "center">
 <img width="824" alt="FinancialCRM Settings Panel" src="https://github.com/user-attachments/assets/3cbcff92-cfe6-4c7f-92c5-17e11005461c">
