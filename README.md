@@ -33,7 +33,7 @@ FinancialCRM uygulamasının şifresini hatırlamayan kullanıcılar için oluş
 ---
 
 ### Bankalar Paneli :camera:
-Uygulamaya giriş yapıldıktan sonra bizi karşılayan paneldir. Bu formda banka hesap bakiyeleri ve son beş banka hareketi kullanıcıya gösterilmektedir.
+Uygulamaya giriş yaptıktan sonra kullanıcıyı karşılayan paneldir. Bu formda banka hesap bakiyeleri ve son beş banka hareketi kullanıcıya gösterilmektedir.
 
 <div align = "center">
 <img width="824" alt="FinancialCRM Banks Panel" src="https://github.com/user-attachments/assets/28deea60-e92c-4cbf-9a23-505c8fc15e3e">
